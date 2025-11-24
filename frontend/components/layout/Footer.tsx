@@ -40,6 +40,8 @@ export default function Footer({ socialLinks }: FooterProps) {
   }, [socialLinks, settings]);
 
   const year = new Date().getFullYear();
+  const brandTagline = settings?.site_tagline?.trim() || "Punchline goes here";
+  const logo = settings?.logo_url;
 
   return (
     <footer className="w-full bg-gradient-to-t from-[rgba(255,255,255,0.02)] to-transparent border-t border-[rgba(255,255,255,0.06)] py-10">
@@ -47,12 +49,19 @@ export default function Footer({ socialLinks }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {/* Brand */}
           <div className="text-center md:text-left">
-            <h3 className="font-display text-xl font-semibold text-[var(--ink)] mb-2">
-              Memshaheb Magazine
-            </h3>
-            <p className="text-sm text-[var(--muted)]">
-              Night-mode magazine for women by women
-            </p>
+            {logo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={logo}
+                alt="Brand logo"
+                className="mx-auto md:mx-0 h-32 w-auto object-contain drop-shadow-[0_10px_28px_rgba(0,0,0,0.28)]"
+              />
+            ) : (
+              <div className="inline-flex items-center justify-center px-4 py-2 rounded-2xl bg-white/5 border border-white/10 text-sm text-[var(--muted)]">
+                Logo placeholder
+              </div>
+            )}
+            <p className="mt-2 text-sm text-[var(--muted)]">{brandTagline}</p>
           </div>
 
           {/* Navigation */}
@@ -105,7 +114,7 @@ export default function Footer({ socialLinks }: FooterProps) {
         {/* Divider */}
         <div className="border-t border-[rgba(255,255,255,0.06)] mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--muted)]">
-            © {year} Memshaheb Magazine. All rights reserved.
+            © {year}. All rights reserved.
           </p>
           <p className="text-xs text-[var(--muted)]">
             Developed by{' '}

@@ -30,7 +30,7 @@ Use `curl` from the VPS to confirm static media is served via the backend contai
 
 ```bash
 # Replace <server-host> with the machine hostname or public IP
-curl -I http://<server-host>:5010/media/The_Subtle_Hues_in_the_Sky-Nuf_Bintay_Alam-8e8b6-455643.jpg
+curl -I http://<server-host>:5010/media/sample.jpg
 curl -I http://<server-host>:5010/media/Ambient.mp3
 ```
 
@@ -51,7 +51,7 @@ If you terminate TLS in a reverse proxy, point it at the same ports and update `
 3. After NPM is provisioned, re-run the `curl` checks against the public HTTPS URLs to confirm certificates and media delivery:
 
 ```bash
-curl -I https://backend.memshaheb.com/media/The_Subtle_Hues_in_the_Sky-Nuf_Bintay_Alam-8e8b6-455643.jpg
+curl -I https://backend.memshaheb.com/media/sample.jpg
 curl -I https://backend.memshaheb.com/media/Ambient.mp3
 curl -I https://memshaheb.com
 ```

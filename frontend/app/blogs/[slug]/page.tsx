@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 
-import { AuthorTeaser } from "@/components/blog/author-teaser";
+import { AuthorTeaserDynamic } from "@/components/blog/author-dynamic";
 import { BlogCard } from "@/components/blog/blog-card";
 import { Callout, ImageGallery, Poem } from "@/components/blog/mdx-callout";
 import { ShareBar } from "@/components/blog/share-bar";
@@ -161,17 +161,42 @@ export default async function BlogDetailPage({ params }: PageProps) {
               </section>
             )}
 
-            <AuthorTeaser
-              name="Memshaheb Editorial"
-              bio="Night-mode magazine crafted by women for women—essays, art, and cultural signals after dark."
+            <AuthorTeaserDynamic
+              fallbackName="Memshaheb Editorial"
+              fallbackBio="Night-mode magazine crafted by women for women—essays, art, and cultural signals after dark."
             />
 
             {relatedFiltered.length > 0 && (
               <section className="mt-16 space-y-6">
                 <h2 className="text-2xl font-semibold text-ink">You might also enjoy</h2>
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-4">
                   {relatedFiltered.map((item) => (
-                    <BlogCard key={item.id} blog={item} />
+                    <a
+                      key={item.id}
+                      href={`/blogs/${item.slug}`}
+                      className="group flex gap-4 rounded-2xl border border-white/10 bg-card/60 p-4 hover:border-accent/40 transition"
+                    >
+                      {item.cover_url && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.cover_url}
+                          alt={item.title}
+                          className="h-24 w-32 rounded-xl object-cover"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs uppercase tracking-[0.28em] text-muted flex flex-wrap gap-2">
+                          {item.category?.name && <span className="text-accent">{item.category.name}</span>}
+                          {item.published_at && <span>{new Date(item.published_at).toLocaleDateString()}</span>}
+                        </div>
+                        <h3 className="mt-1 text-lg font-semibold text-ink group-hover:text-accent transition-colors">
+                          {item.title}
+                        </h3>
+                        {item.excerpt && (
+                          <p className="mt-1 text-sm text-muted line-clamp-2">{item.excerpt}</p>
+                        )}
+                      </div>
+                    </a>
                   ))}
                 </div>
               </section>

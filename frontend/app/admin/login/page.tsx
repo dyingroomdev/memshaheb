@@ -13,6 +13,7 @@ export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [rememberMe, setRememberMe] = useState(true);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,7 +33,14 @@ export default function AdminLogin() {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('admin_token', data.access_token);
+        // Persist token based on Remember Me
+        if (rememberMe) {
+          localStorage.setItem('admin_token', data.access_token);
+          sessionStorage.removeItem('admin_token');
+        } else {
+          sessionStorage.setItem('admin_token', data.access_token);
+          localStorage.removeItem('admin_token');
+        }
         router.push('/admin');
       } else {
         setError(data.detail || 'Login failed');
@@ -122,6 +130,19 @@ export default function AdminLogin() {
               </div>
             </div>
 
+            <div className="flex items-center gap-2">
+              <input
+                id="remember"
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="h-4 w-4 rounded border-white/20 bg-white/5 text-accent focus:ring-accent/50"
+              />
+              <label htmlFor="remember" className="text-sm text-muted select-none">
+                Remember me (keep me signed in on this browser)
+              </label>
+            </div>
+
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -141,15 +162,6 @@ export default function AdminLogin() {
           </form>
         </motion.div>
 
-        {/* Footer */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="text-center text-sm text-muted mt-8"
-        >
-          Memshaheb © 2025
-        </motion.p>
       </motion.div>
     </div>
   );

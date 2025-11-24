@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import { getBlogs, getSiteSettings } from "@/lib/api";
-import { BlogCard } from "@/components/blog/blog-card";
+import { getBlogCategories, getBlogs, getSiteSettings } from "@/lib/api";
 import { blogToCardData } from "@/lib/blog-utils";
+import { BlogArchiveView } from "@/components/blog/blog-archive-view";
 
 export const metadata = {
   title: "Magazine — Memshaheb",
@@ -22,35 +22,59 @@ export default async function BlogArchivePage({ searchParams }: PageProps) {
   const tagParam = searchParams?.tag?.trim();
   const categoryParam = searchParams?.category?.trim();
 
-  const [blogResponse, siteSettings] = await Promise.all([
+  const [blogResponse, siteSettings, categories] = await Promise.all([
     getBlogs({
       query: query || undefined,
       tags: tagParam ? [tagParam] : undefined,
       category: categoryParam || undefined,
       limit: 24
     }),
-    getSiteSettings().catch(() => null)
+    getSiteSettings().catch(() => null),
+    getBlogCategories().catch(() => [])
   ]);
 
   const posts = blogResponse.items.filter((post) => post.published_at);
+  const category = categoryParam
+    ? categories.find((c) => c.slug === categoryParam || String(c.id) === categoryParam)
+    : null;
+  const isCategoryView = !!categoryParam;
+  const title = category?.name || categoryParam || "The Journal";
+  const description = category?.description || (isCategoryView ? "" : "Strong women-focused magazine flavor.");
 
   return (
     <>
     <main className="bg-background">
       <div className="mx-auto w-full max-w-6xl px-6 pb-24 pt-20 sm:px-12">
         <header className="flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-8">
-          <div>
-            <p className="text-sm uppercase tracking-[0.32em] text-muted/70">Words at Dusk</p>
-            <h1 className="mt-3 text-4xl font-semibold text-ink sm:text-5xl">Blog</h1>
-            <p className="mt-4 max-w-2xl text-base text-muted sm:text-lg">
-              Essays, studio notes, and quiet experiments from the night-first museum.
-            </p>
+          <div className="flex-1">
+            <h1 className="mt-3 text-4xl font-semibold text-ink sm:text-5xl">{title}</h1>
+            {description && (
+              <p className="mt-4 max-w-2xl text-base text-muted sm:text-lg">{description}</p>
+            )}
           </div>
-          <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.32em] text-muted/60">
-            {query && <span>Search: “{query}”</span>}
-            {tagParam && <span>Tag: {tagParam}</span>}
-            {categoryParam && <span>Category: {categoryParam}</span>}
-            {posts.length > 0 && <span>{posts.length} published entries</span>}
+          <div className="flex flex-col items-end gap-3">
+            <form action="/blogs" className="flex items-center gap-2">
+              <input
+                type="text"
+                name="q"
+                defaultValue={query}
+                placeholder="Search stories..."
+                className="w-48 sm:w-60 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/50"
+              />
+              {categoryParam && <input type="hidden" name="category" value={categoryParam} />}
+              {tagParam && <input type="hidden" name="tag" value={tagParam} />}
+              <button
+                type="submit"
+                className="px-3 py-2 rounded-xl bg-accent text-[var(--bg)] text-sm font-medium hover:opacity-90 transition"
+              >
+                Search
+              </button>
+            </form>
+            <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.32em] text-muted/60">
+              {query && <span>Search: “{query}”</span>}
+              {tagParam && <span>Tag: {tagParam}</span>}
+              {posts.length > 0 && <span>{posts.length} published entries</span>}
+            </div>
           </div>
         </header>
 
@@ -63,16 +87,7 @@ export default async function BlogArchivePage({ searchParams }: PageProps) {
           </div>
         ) : (
           <section className="mt-12 space-y-16">
-            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-              {posts.map((post, index) => (
-                <BlogCard
-                  key={post.id}
-                  blog={post}
-                  query={query}
-                  delay={index * 0.05}
-                />
-              ))}
-            </div>
+            <BlogArchiveView posts={posts} query={query} />
 
             <aside className="space-y-6 rounded-3xl border border-white/10 bg-card/60 p-6 text-sm text-muted">
               <h2 className="text-lg font-semibold text-ink">Archive Notes</h2>

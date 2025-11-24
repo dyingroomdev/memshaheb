@@ -40,13 +40,13 @@ declare namespace __next_route_internal_types__ {
     | `/admin/home/masthead`
     | `/admin/home/sections`
     | `/admin/login`
+    | `/admin/paintings`
     | `/admin/museum`
     | `/admin/pages`
     | `/admin/profile`
-    | `/admin/paintings`
-    | `/admin/submissions`
     | `/admin/settings`
     | `/admin/settings/nav-links`
+    | `/admin/submissions`
     | `/admin/users`
     | `/api/socials`
     | `/blogs`
@@ -61,10 +61,10 @@ declare namespace __next_route_internal_types__ {
   type DynamicRoutes<T extends string = string> = 
     | `/admin/blog/${SafeSlug<T>}/edit`
     | `/admin/blog/${SafeSlug<T>}/editor`
+    | `/admin/paintings/${SafeSlug<T>}/editor`
     | `/admin/museum/${SafeSlug<T>}/editor`
     | `/admin/pages/${SafeSlug<T>}`
     | `/admin/pages/${SafeSlug<T>}/sections`
-    | `/admin/paintings/${SafeSlug<T>}/editor`
     | `/blogs/${SafeSlug<T>}`
     | `/museum/${SafeSlug<T>}`
     | `/paintings/${SafeSlug<T>}`

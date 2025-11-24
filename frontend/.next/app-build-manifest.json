@@ -1,10 +1,9 @@
 {
   "pages": {
-    "/page": [
+    "/blogs/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
+      "static/chunks/app/blogs/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -12,25 +11,36 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/admin/settings/nav-links/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/settings/nav-links/page.js"
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
+    ],
+    "/blogs/[slug]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/blogs/[slug]/page.js"
+    ],
+    "/admin/settings/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/settings/page.js"
     ],
     "/admin/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/layout.js"
     ],
-    "/admin/paintings/page": [
+    "/about/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/paintings/page.js"
+      "static/chunks/app/about/page.js"
     ],
-    "/admin/museum/page": [
+    "/admin/blog/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/museum/page.js"
+      "static/chunks/app/admin/blog/page.js"
     ],
     "/admin/login/page": [
       "static/chunks/webpack.js",
@@ -42,60 +52,55 @@
       "static/chunks/main-app.js",
       "static/chunks/app/admin/page.js"
     ],
-    "/admin/museum/[roomId]/editor/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/admin/museum/[roomId]/editor/page.js"
-    ],
     "/admin/hero/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/hero/page.js"
     ],
-    "/blogs/page": [
+    "/admin/home/sections/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/blogs/page.js"
+      "static/chunks/app/admin/home/sections/page.js"
     ],
-    "/about/page": [
+    "/admin/home/masthead/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/about/page.js"
+      "static/chunks/app/admin/home/masthead/page.js"
     ],
     "/admin/profile/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/profile/page.js"
     ],
-    "/blogs/[slug]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/blogs/[slug]/page.js"
-    ],
     "/contact/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/contact/page.js"
     ],
-    "/admin/settings/page": [
+    "/admin/brand/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/settings/page.js"
+      "static/chunks/app/admin/brand/page.js"
     ],
     "/museum/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/museum/page.js"
     ],
-    "/copyright/page": [
+    "/admin/blog/[id]/editor/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/copyright/page.js"
+      "static/chunks/app/admin/blog/[id]/editor/page.js"
     ],
-    "/admin/biography/page": [
+    "/admin/submissions/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/biography/page.js"
+      "static/chunks/app/admin/submissions/page.js"
+    ],
+    "/admin/blog/categories/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/blog/categories/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",

@@ -51,8 +51,8 @@ export function Navbar({ siteSettings }: NavbarProps) {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-[rgba(5,4,10,0.92)] backdrop-blur-xl border-b border-white/10 py-3' 
-          : 'bg-[rgba(5,4,10,0.6)] py-4'
+          ? 'bg-[rgba(5,4,10,0.95)] backdrop-blur-xl border-b border-white/10 shadow-[0_12px_24px_rgba(0,0,0,0.45)] py-3' 
+          : 'bg-[rgba(5,4,10,0.85)] backdrop-blur-xl border-b border-white/10 shadow-[0_12px_24px_rgba(0,0,0,0.35)] py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

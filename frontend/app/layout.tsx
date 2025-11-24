@@ -4,7 +4,6 @@ import { Jost } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/app-shell";
 import ScreenLoader from "@/components/screen-loader";
-import Footer from "@/components/layout/Footer";
 
 const display = Jost({
   subsets: ["latin"],
@@ -34,7 +33,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ScreenLoader />
         <AppShell>
           {children}
-          <Footer />
         </AppShell>
       </body>
     </html>

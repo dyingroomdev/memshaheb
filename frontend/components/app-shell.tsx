@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 
 import { Navbar } from '@/components/navbar';
+import Footer from '@/components/layout/Footer';
 import { getSiteSettings, type SiteSettings } from '@/lib/api';
 
 const NAVBAR_EXCLUDED_PREFIXES = ['/admin'];
@@ -13,9 +14,16 @@ function shouldHideNavbar(pathname: string) {
   return NAVBAR_EXCLUDED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
 }
 
+const FOOTER_EXCLUDED_PREFIXES = ['/admin'];
+
+function shouldHideFooter(pathname: string) {
+  return FOOTER_EXCLUDED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+}
+
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const hideNavbar = shouldHideNavbar(pathname);
+  const hideFooter = shouldHideFooter(pathname);
   const [siteSettings, setSiteSettings] = useState<SiteSettings | null>(null);
 
   useEffect(() => {
@@ -86,6 +94,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <>
       {!hideNavbar && <Navbar siteSettings={siteSettings} />}
       <div className={hideNavbar ? '' : 'pt-20'}>{children}</div>
+      {!hideFooter && <Footer />}
     </>
   );
 }

@@ -116,25 +116,86 @@ export function RichEditor({
     { icon: Link, action: () => insertText('[', '](url)'), title: 'Link' },
     { icon: ImageIcon, action: insertImage, title: 'Image' },
     { icon: Quote, action: () => insertText('> '), title: 'Quote' },
-    { icon: List, action: () => insertText('- '), title: 'Bullet List' },
-    { icon: ListOrdered, action: () => insertText('1. '), title: 'Numbered List' },
+    { icon: List, action: () => insertText('- '), title: 'Bullet List', label: '•' },
+    { icon: ListOrdered, action: () => insertText('1. '), title: 'Numbered List', label: '1.' },
   ];
 
   const renderPreview = (markdown: string) => {
-    // Simple markdown to HTML conversion
-    return markdown
-      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/`(.*?)`/g, '<code>$1</code>')
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
-      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width: 100%; height: auto;" />')
-      .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
-      .replace(/^\- (.*$)/gim, '<li>$1</li>')
-      .replace(/^(\d+)\. (.*$)/gim, '<li>$1. $2</li>')
-      .replace(/\n/g, '<br>');
+    const formatInline = (text: string) =>
+      text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`(.*?)`/g, '<code>$1</code>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width: 100%; height: auto;" />');
+
+    const lines = markdown.split(/\r?\n/);
+    const out: string[] = [];
+    let inUl = false;
+    let inOl = false;
+
+    const closeLists = () => {
+      if (inUl) out.push('</ul>');
+      if (inOl) out.push('</ol>');
+      inUl = false;
+      inOl = false;
+    };
+
+    lines.forEach((raw) => {
+      const line = raw.trim();
+      if (!line) {
+        closeLists();
+        out.push('<br>');
+        return;
+      }
+
+      // Headings
+      const h3 = line.match(/^### (.*)$/);
+      const h2 = line.match(/^## (.*)$/);
+      const h1 = line.match(/^# (.*)$/);
+      if (h3 || h2 || h1) {
+        closeLists();
+        if (h1) out.push(`<h1>${formatInline(h1[1])}</h1>`);
+        else if (h2) out.push(`<h2>${formatInline(h2[1])}</h2>`);
+        else if (h3) out.push(`<h3>${formatInline(h3[1])}</h3>`);
+        return;
+      }
+
+      // Blockquote
+      const quote = line.match(/^> (.*)$/);
+      if (quote) {
+        closeLists();
+        out.push(`<blockquote>${formatInline(quote[1])}</blockquote>`);
+        return;
+      }
+
+      // Lists
+      if (/^\- /.test(line)) {
+        if (!inUl) {
+          closeLists();
+          inUl = true;
+          out.push('<ul>');
+        }
+        out.push(`<li>${formatInline(line.replace(/^\- /, ''))}</li>`);
+        return;
+      }
+      if (/^\d+\.\s+/.test(line)) {
+        if (!inOl) {
+          closeLists();
+          inOl = true;
+          out.push('<ol>');
+        }
+        out.push(`<li>${formatInline(line.replace(/^\d+\.\s+/, ''))}</li>`);
+        return;
+      }
+
+      // Paragraph
+      closeLists();
+      out.push(`<p>${formatInline(line)}</p>`);
+    });
+
+    closeLists();
+    return out.join('');
   };
 
   return (
@@ -149,7 +210,10 @@ export function RichEditor({
               title={button.title}
               className="p-2 rounded-xl hover:bg-white/10 transition-colors"
             >
-              <button.icon className="h-4 w-4 text-muted" />
+              <div className="flex items-center gap-1">
+                <button.icon className="h-4 w-4 text-muted" />
+                {button.label && <span className="text-[11px] text-muted">{button.label}</span>}
+              </div>
             </button>
           ))}
         </div>

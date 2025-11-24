@@ -12,7 +12,9 @@ export function formatPublishedDate(date: string | null | undefined): string | n
     return null;
   }
   try {
-    return new Intl.DateTimeFormat("en", { month: "long", day: "numeric", year: "numeric" }).format(new Date(date));
+    return new Intl.DateTimeFormat("en", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }).format(
+      new Date(date)
+    );
   } catch {
     return null;
   }

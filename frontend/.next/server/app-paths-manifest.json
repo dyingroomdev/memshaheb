@@ -1,10 +1,8 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/copyright/page": "app/copyright/page.js",
-  "/about/page": "app/about/page.js",
   "/blogs/page": "app/blogs/page.js",
-  "/blogs/[slug]/page": "app/blogs/[slug]/page.js",
   "/page": "app/page.js",
-  "/admin/museum/page": "app/admin/museum/page.js",
-  "/admin/biography/page": "app/admin/biography/page.js"
+  "/admin/blog/page": "app/admin/blog/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/settings/page": "app/admin/settings/page.js",
+  "/admin/hero/page": "app/admin/hero/page.js"
 }
