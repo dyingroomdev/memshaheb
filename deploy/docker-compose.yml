@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    env_file:
+      - backend.env
+    ports:
+      - "${BACKEND_PORT:-5010}:8000"
+    volumes:
+      - ../backend/backend/media:/app/backend/media
+    restart: unless-stopped
+    networks:
+      - pg-network
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+    env_file:
+      - frontend.env
+    ports:
+      - "${FRONTEND_PORT:-5011}:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - pg-network
+
+networks:
+  pg-network:
+    external: true

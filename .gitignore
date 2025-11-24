@@ -1,0 +1,6 @@
+deploy/backend.env
+deploy/frontend.env
+.venv
+
+frontend/node_modules/
+backend/node_modules/

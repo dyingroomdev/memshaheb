@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "slug": "nocturnal-dreams",
+    "title": "Nocturnal Dreams",
+    "subtitle": "Glowing reveries stitched across the midnight canvas.",
+    "theme": "dream",
+    "artifacts_count": 5,
+    "spotlight_count": 1,
+    "hero_image": "/mock/museum/dream.jpg",
+    "year": 2024,
+    "curator_note": "Each piece hums like a lullaby for wide-awake souls."
+  },
+  {
+    "id": "2",
+    "slug": "luminous-thought",
+    "title": "Luminous Thought",
+    "subtitle": "Painted meditations on balance, light, and memory.",
+    "theme": "philosophy",
+    "artifacts_count": 4,
+    "spotlight_count": 1,
+    "hero_image": "/mock/museum/philosophy.jpg",
+    "year": 2023,
+    "curator_note": "Notes from the studio—inked in silence and soft glow."
+  }
+]

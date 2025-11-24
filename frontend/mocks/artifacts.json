@@ -1,0 +1,33 @@
+{
+  "nocturnal-dreams": [
+    {
+      "id": "a1",
+      "title": "Velvet Orbit",
+      "year": 2024,
+      "medium": "Oil on linen",
+      "image": "/mock/museum/velvet-orbit.jpg",
+      "excerpt": "A ribbon of color tracing the slow breath of night.",
+      "slug": "velvet-orbit"
+    },
+    {
+      "id": "a2",
+      "title": "Moonlight Lattice",
+      "year": 2023,
+      "medium": "Acrylic on canvas",
+      "image": "/mock/museum/moonlight-lattice.jpg",
+      "excerpt": "Geometries arranged for wanderers in the hour after dusk.",
+      "slug": "moonlight-lattice"
+    }
+  ],
+  "luminous-thought": [
+    {
+      "id": "b1",
+      "title": "Saffron Thesis",
+      "year": 2022,
+      "medium": "Mixed media",
+      "image": "/mock/museum/saffron-thesis.jpg",
+      "excerpt": "A meditation on glow and quiet conviction.",
+      "slug": "saffron-thesis"
+    }
+  ]
+}
