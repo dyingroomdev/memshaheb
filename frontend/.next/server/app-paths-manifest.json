@@ -1,8 +1,8 @@
 {
-  "/blogs/page": "app/blogs/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/admin/blog/page": "app/admin/blog/page.js",
-  "/admin/page": "app/admin/page.js",
+  "/blogs/page": "app/blogs/page.js",
+  "/contact/page": "app/contact/page.js",
   "/admin/settings/page": "app/admin/settings/page.js",
   "/admin/hero/page": "app/admin/hero/page.js"
 }
