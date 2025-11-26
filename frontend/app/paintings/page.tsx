@@ -11,7 +11,10 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function PaintingsPage() {
-  let items = [];
+  type PaintingsResponse = Awaited<ReturnType<typeof getPaintings>>;
+  type Painting = PaintingsResponse["items"][number];
+
+  let items: Painting[] = [];
   let next_cursor: string | null = null;
 
   try {
