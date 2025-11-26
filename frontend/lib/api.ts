@@ -58,6 +58,8 @@ export type SiteSettings = {
   google_analytics_id?: string | null;
   google_site_verification?: string | null;
   bing_site_verification?: string | null;
+  manual_total_views?: number | null;
+  ga_view_sample?: number | null;
 };
 
 export type NavLinkNode = {
