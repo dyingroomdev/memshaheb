@@ -61,7 +61,7 @@ export default function AdminPageEditor() {
         description: data.description ?? '',
         is_active: data.is_active ?? true
       });
-      setSections((data.sections || []).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+      setSections((data.sections || []).sort((a: PageSection, b: PageSection) => (a.order ?? 0) - (b.order ?? 0)));
       setStatus(null);
     } catch (err) {
       console.error('Failed to load page', err);
