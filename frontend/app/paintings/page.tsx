@@ -7,8 +7,22 @@ export const metadata = {
   description: "A gallery-grade experience blending soft motion, detailed metadata, and editorial storytelling."
 };
 
+// Avoid build-time failures if the API is unreachable during docker builds
+export const dynamic = "force-dynamic";
+
 export default async function PaintingsPage() {
-  const { items, next_cursor } = await getPaintings({ limit: 24 });
+  let items = [];
+  let next_cursor: string | null = null;
+
+  try {
+    const response = await getPaintings({ limit: 24 });
+    items = response.items ?? [];
+    next_cursor = response.next_cursor ?? null;
+  } catch (error) {
+    // Fail soft during static generation/export; show empty state
+    items = [];
+    next_cursor = null;
+  }
 
   return (
       <main className="bg-background">

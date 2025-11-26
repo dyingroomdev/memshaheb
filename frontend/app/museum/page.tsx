@@ -3,13 +3,15 @@ import { getSiteSettings } from "@/lib/api";
 
 import { MuseumLanding } from "./_components/museum-landing";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Virtual Museum — Memshaheb",
   description: "Stroll through curated night-mode rooms with ambient soundscapes and collector-ready artworks."
 };
 
 export default async function MuseumPage() {
-  const rooms = await fetchMuseumRoomsSummary();
+  const rooms = await fetchMuseumRoomsSummary().catch(() => []);
   const siteSettings = await getSiteSettings().catch(() => null);
   return (
     <>

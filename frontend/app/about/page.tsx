@@ -44,8 +44,11 @@ export const metadata = {
     "Memshaheb is a night-mode magazine by and for women, blending essays, art, and culture with a calm editorial voice."
 };
 
+// Prevent build-time failures if API is unavailable during image export/prerender
+export const dynamic = "force-dynamic";
+
 export default async function AboutPage() {
-  const [biography, siteSettings] = await Promise.all([getBiography(), getSiteSettings()]);
+  const [biography, siteSettings] = await Promise.all([safeBiography(), safeSiteSettings()]);
 
   const extracted = extractNarrative(biography?.rich_text ?? fallbackBiography());
   const socials = resolveInstagramSocial(biography, siteSettings);
@@ -197,6 +200,22 @@ function normalizeQuote(content: string): [string | undefined, string | undefine
   const quoteText = parts[0]?.trim();
   const attribution = parts[1]?.trim();
   return [quoteText || undefined, attribution || undefined];
+}
+
+async function safeBiography() {
+  try {
+    return await getBiography();
+  } catch (_err) {
+    return null;
+  }
+}
+
+async function safeSiteSettings(): Promise<SiteSettings | null> {
+  try {
+    return await getSiteSettings();
+  } catch (_err) {
+    return null;
+  }
 }
 
 function extractTimeline(markdown: string): TimelineItem[] {

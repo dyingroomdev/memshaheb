@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   description: "Get in touch for stories, collaborations, and editorial partnerships with Memshaheb.",
 };
 
+// Avoid build-time failures if API is unreachable during static export
+export const dynamic = "force-dynamic";
+
 export default async function ContactPage() {
   const siteSettings = await getSiteSettings().catch(() => null);
   const socials = Object.entries(siteSettings?.social_links ?? {})
