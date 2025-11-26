@@ -546,7 +546,12 @@ export default function BlogEditor({ params }: { params: { id: string } }) {
               Author
               <select
                 value={formValues.author_id}
-                onChange={handleInputChange('author_id')}
+                onChange={(e) =>
+                  setFormValues((prev) => ({
+                    ...prev,
+                    author_id: e.target.value,
+                  }))
+                }
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-accent/60"
               >
                 <option value="">Auto (current user)</option>
