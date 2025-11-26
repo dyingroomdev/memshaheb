@@ -1,20 +1,9 @@
-import { DynamicPage } from "@/components/DynamicPage";
-import { SubmissionForm } from "@/components/submit/SubmissionForm";
+'use client';
 
-export const metadata = {
-  title: "Submit Your Writing — Memshaheb",
-};
+import { useState } from "react";
+import { submitWriting } from "@/lib/api";
 
-export default function SubmitWritingPage() {
-  return (
-    <div className="space-y-12">
-      <DynamicPage slug="submit-writing" />
-      <SubmissionForm />
-    </div>
-  );
-}
-
-function SubmissionForm() {
+export function SubmissionForm() {
   const [form, setForm] = useState({ name: "", email: "", title: "", content: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
