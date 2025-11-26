@@ -39,14 +39,14 @@ export default async function ContactPage() {
         <ContactCard
           title="Phone"
           subtitle="Call or WhatsApp"
-          href={siteSettings?.contact_phone ? `tel:${siteSettings.contact_phone}` : undefined}
+          href={siteSettings?.contact_phone ? `tel:${siteSettings.contact_phone}` : "#"}
           display={siteSettings?.contact_phone || "Phone not set"}
           icon="phone"
         />
         <ContactCard
           title="Email"
           subtitle="General inquiries"
-          href={siteSettings?.contact_email ? `mailto:${siteSettings.contact_email}` : undefined}
+          href={siteSettings?.contact_email ? `mailto:${siteSettings.contact_email}` : "#"}
           display={siteSettings?.contact_email || "Email not set"}
           icon="mail"
         />

@@ -48,17 +48,25 @@ async function HomeContent() {
     heroPool.find((post) => post.published_at) ||
     null;
   // Transform hero slides for component
-  const heroSlides = slides.length > 0 ? slides.map(slide => ({
-    image: slide.image_url,
-    title: slide.title || 'Memshaheb',
-    subtitle: slide.subtitle || 'A night-mode magazine for women',
-    cta: slide.cta_href ? { label: slide.cta_label || 'Learn More', href: slide.cta_href } : undefined
-  })) : [{
-    image: '/placeholder-hero.jpg',
-    title: 'Memshaheb',
-    subtitle: 'Stories · Art · Culture',
-    cta: { label: 'Enter Her World', href: '/museum' }
-  }];
+  const heroSlides = slides.length > 0
+    ? slides.map((slide, idx) => ({
+        id: slide.id ?? idx,
+        image_url: slide.image_url,
+        title: slide.title || "Memshaheb",
+        subtitle: slide.subtitle || "A night-mode magazine for women",
+        cta_label: slide.cta_label,
+        cta_href: slide.cta_href
+      }))
+    : [
+        {
+          id: 0,
+          image_url: "/placeholder-hero.jpg",
+          title: "Memshaheb",
+          subtitle: "Stories · Art · Culture",
+          cta_label: "Enter Her World",
+          cta_href: "/museum"
+        }
+      ];
 
   const latestBlogs = (homeData?.latest ?? blogResponse.items ?? []).filter((post) => post.published_at).slice(0, 6);
   const exclusives = homeData?.exclusives ?? [];
@@ -69,9 +77,16 @@ async function HomeContent() {
   const adOne = adSections[0]?.image_url ? null : adCandidates[0] || latestBlogs[0];
   const adTwo = adSections[1]?.image_url ? null : adCandidates[1] || latestBlogs[1];
 
+  const carouselSlides = heroSlides.map((s) => ({
+    image: s.image_url,
+    title: s.title || "Memshaheb",
+    subtitle: s.subtitle || "",
+    cta: s.cta_href ? { label: s.cta_label || "Learn more", href: s.cta_href } : undefined,
+  }));
+
   return (
     <main className="bg-[var(--bg)] text-[var(--ink)]">
-      <HeroCarousel slides={heroSlides} />
+      <HeroCarousel slides={carouselSlides} />
       <SectionWrapper>
         <HeroMasthead heroStory={heroStory} slides={heroSlides} siteSettings={siteSettings} />
       </SectionWrapper>

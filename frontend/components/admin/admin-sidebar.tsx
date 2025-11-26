@@ -71,7 +71,7 @@ export function AdminSidebar() {
         return (
           <div key={item.label} className="space-y-1">
             <Link
-              href={item.path || '#'}
+              href={(item.path || '#') as any}
               onClick={(e) => {
                 if (isLogout) {
                   e.preventDefault();

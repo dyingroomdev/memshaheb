@@ -58,7 +58,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
+          <Link href={("/" as any)} className="flex items-center space-x-3 group">
             <div className="hidden md:block">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -80,7 +80,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6">
             <Link
-              href="/"
+              href={("/" as any)}
               className={`relative text-sm font-medium tracking-wide transition-colors duration-200 after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[var(--accent)] after:transition-transform after:duration-300 ${
                 pathname === '/' ? 'text-[var(--ink)] after:scale-x-100' : 'text-[var(--muted)] hover:text-[var(--ink)] hover:after:scale-x-100'
               }`}
@@ -104,7 +104,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
                       .map((child) => (
                         <Link
                           key={`${link.label}-${child.label}-${child.href}`}
-                          href={child.href || '#'}
+                          href={(child.href || '#') as any}
                           className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-ink hover:bg-white/5 transition"
                         >
                           {child.label}
@@ -115,7 +115,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
               ) : (
                 <Link
                   key={link.href + link.label}
-                  href={link.href || '#'}
+                  href={(link.href || '#') as any}
                   className={`relative text-sm font-medium tracking-wide transition-colors duration-200 after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[var(--accent)] after:transition-transform after:duration-300 ${
                     pathname === link.href
                       ? 'text-[var(--ink)] after:scale-x-100'
@@ -139,7 +139,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
             </button>
 
             <Link
-              href="/blogs"
+              href={("/blogs" as any)}
               className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] text-white font-medium rounded-xl shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/40 transition-shadow duration-200"
             >
               <BellRing className="h-4 w-4" />
@@ -165,7 +165,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
           >
             <div className="flex flex-col space-y-3 pt-4">
               <Link
-                href="/"
+                href={("/" as any)}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`text-sm font-medium transition-colors duration-200 ${
                   pathname === '/' ? 'text-accent' : 'text-muted hover:text-ink'
@@ -186,7 +186,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
                       .map((child) => (
                         <Link
                           key={`${link.label}-${child.label}-${child.href}`}
-                          href={child.href || '#'}
+                          href={(child.href || '#') as any}
                           onClick={() => setIsMobileMenuOpen(false)}
                           className={`pl-3 text-sm transition-colors duration-200 ${
                             pathname === child.href ? 'text-accent' : 'text-muted hover:text-ink'
@@ -199,7 +199,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
                 ) : (
                   <Link
                     key={link.href + link.label}
-                    href={link.href || '#'}
+                    href={(link.href || '#') as any}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`text-sm font-medium transition-colors duration-200 ${
                       pathname === link.href ? 'text-accent' : 'text-muted hover:text-ink'

@@ -19,7 +19,7 @@ export function StoryStrip({ title, href, posts, badge }: StoryStripProps) {
           <p className="text-xs uppercase tracking-[0.32em] text-muted/80">{title}</p>
           <h2 className="text-3xl font-semibold text-ink">{title}</h2>
         </div>
-        <Link href={href} className="text-sm text-accent hover:text-accent-2">
+        <Link href={href as any} className="text-sm text-accent hover:text-accent-2">
           View all
         </Link>
       </div>

@@ -18,9 +18,9 @@ export function HeroMasthead({ heroStory, slides, siteSettings }: HeroMastheadPr
     siteSettings?.seo_description?.trim() ||
     "Stories, exclusives, and culture in a calm, dark canvas crafted by and for women.";
   const primaryCtaLabel = siteSettings?.hero_primary_label?.trim() || (heroStory ? "Read now" : "Learn more");
-  const primaryCtaHref = siteSettings?.hero_primary_href?.trim() || (heroStory ? `/blogs/${heroStory.slug}` : "/blogs");
+  const primaryCtaHref = (siteSettings?.hero_primary_href?.trim() || (heroStory ? `/blogs/${heroStory.slug}` : "/blogs")) as string;
   const secondaryCtaLabel = siteSettings?.hero_secondary_label?.trim() || "About Memshaheb";
-  const secondaryCtaHref = siteSettings?.hero_secondary_href?.trim() || "/about";
+  const secondaryCtaHref = (siteSettings?.hero_secondary_href?.trim() || "/about") as string;
 
   return (
     <section className="relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[rgba(5,4,10,0.85)] via-[rgba(15,10,20,0.7)] to-[rgba(10,8,18,0.9)] p-6 md:p-10">
@@ -39,13 +39,13 @@ export function HeroMasthead({ heroStory, slides, siteSettings }: HeroMastheadPr
           <p className="text-muted max-w-xl">{siteDescription}</p>
           <div className="flex flex-wrap gap-3">
             <Link
-              href={primaryCtaHref}
+              href={primaryCtaHref as any}
               className="rounded-full px-5 py-2.5 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] text-[var(--bg)] font-semibold shadow-[0_15px_40px_rgba(203,59,145,0.35)]"
             >
               {primaryCtaLabel}
             </Link>
             <Link
-              href={secondaryCtaHref}
+              href={secondaryCtaHref as any}
               className="rounded-full px-5 py-2.5 border border-white/15 text-ink hover:border-[var(--accent)] hover:text-[var(--accent)] transition"
             >
               {secondaryCtaLabel}
