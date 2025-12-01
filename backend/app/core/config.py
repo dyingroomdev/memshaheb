@@ -50,6 +50,7 @@ class Settings(BaseSettings):
         "http://www.memsahebbd.com",
         "http://api.memsahebbd.com",
     ]
+    CORS_ALLOW_ORIGIN_REGEX: Optional[str] = r"https?://([^.]+\\.)?memsahebbd\\.com"
     CORS_ALLOW_METHODS: list[str] = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     CORS_ALLOW_HEADERS: list[str] = ["*"]
     CORS_ALLOW_CREDENTIALS: bool = True
