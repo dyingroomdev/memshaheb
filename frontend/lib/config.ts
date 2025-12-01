@@ -1,5 +1,5 @@
-const FALLBACK_PROD_API_BASE = "http://155.248.246.208:8100";
-const FALLBACK_DEV_API_BASE = "http://155.248.246.208:8100";
+const FALLBACK_PROD_API_BASE = "https://api.memsahebbd.com";
+const FALLBACK_DEV_API_BASE = "https://api.memsahebbd.com";
 
 const rawApiBase =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
