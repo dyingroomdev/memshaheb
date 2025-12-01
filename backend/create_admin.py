@@ -6,40 +6,43 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from sqlalchemy.orm import Session
+
+from app.core.config import settings
+from app.core.security import get_password_hash
 from app.db.session import SessionLocal
 from app.models.user import User, UserRole
-import bcrypt
 
 def create_admin():
     session: Session = SessionLocal()
+    email = str(settings.INITIAL_ADMIN_EMAIL)
+    password = str(settings.INITIAL_ADMIN_PASSWORD)
+    display_name = settings.INITIAL_ADMIN_DISPLAY_NAME or "Administrator"
+
     try:
-        email = "admin@example.com"
-        password = "admin123"
-        
-        # Check if admin exists
         existing = session.query(User).filter(User.email == email).first()
         if existing:
-            print(f"Admin already exists: {email}")
+            # Update password/display name to match env so rerunning resets creds
+            existing.password_hash = get_password_hash(password)
+            existing.display_name = display_name
+            existing.role = UserRole.ADMIN
+            session.commit()
+            print(f"Admin already existed; updated credentials for: {email}")
             return
-        
-        # Hash password manually with bcrypt
-        password_bytes = password.encode('utf-8')
-        salt = bcrypt.gensalt()
-        hashed = bcrypt.hashpw(password_bytes, salt).decode('utf-8')
-        
+
         admin = User(
             email=email,
-            password_hash=hashed,
+            password_hash=get_password_hash(password),
             role=UserRole.ADMIN,
-            display_name="Administrator",
+            display_name=display_name,
         )
         session.add(admin)
         session.commit()
         print(f"Admin user created: {email}")
-        
+
     except Exception as exc:
         session.rollback()
         print(f"Error creating admin: {exc}")
+        raise
     finally:
         session.close()
 
