@@ -15,6 +15,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [customLinks, setCustomLinks] = useState<NavLinkNode[]>([]);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [closeTimer, setCloseTimer] = useState<NodeJS.Timeout | null>(null);
   const [branding, setBranding] = useState<{ logo?: string | null; title?: string | null }>({});
   const pathname = usePathname();
 
@@ -93,8 +94,17 @@ export function Navbar({ siteSettings }: NavbarProps) {
                 <div
                   key={link.label}
                   className="relative"
-                  onMouseEnter={() => setOpenDropdown(link.label)}
-                  onMouseLeave={() => setOpenDropdown((current) => (current === link.label ? null : current))}
+                  onMouseEnter={() => {
+                    if (closeTimer) {
+                      clearTimeout(closeTimer);
+                      setCloseTimer(null);
+                    }
+                    setOpenDropdown(link.label);
+                  }}
+                  onMouseLeave={() => {
+                    const timer = setTimeout(() => setOpenDropdown((current) => (current === link.label ? null : current)), 150);
+                    setCloseTimer(timer);
+                  }}
                 >
                   <button
                     type="button"
@@ -104,9 +114,20 @@ export function Navbar({ siteSettings }: NavbarProps) {
                     <ChevronDown className="h-3 w-3" />
                   </button>
                   <div
-                    className={`absolute left-0 mt-3 w-48 rounded-2xl border border-white/10 bg-card/90 backdrop-blur-xl shadow-glow-soft p-3 space-y-1 z-50 transition ${
+                    className={`absolute left-0 top-full pt-3 w-48 rounded-2xl border border-white/10 bg-card/90 backdrop-blur-xl shadow-glow-soft p-3 space-y-1 z-50 transition ${
                       openDropdown === link.label ? 'opacity-100 visible' : 'opacity-0 invisible'
                     }`}
+                    onMouseEnter={() => {
+                      if (closeTimer) {
+                        clearTimeout(closeTimer);
+                        setCloseTimer(null);
+                      }
+                      setOpenDropdown(link.label);
+                    }}
+                    onMouseLeave={() => {
+                      const timer = setTimeout(() => setOpenDropdown((current) => (current === link.label ? null : current)), 150);
+                      setCloseTimer(timer);
+                    }}
                   >
                     {link.children
                       .filter((c) => c.enabled !== false)
