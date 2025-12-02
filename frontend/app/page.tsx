@@ -73,9 +73,6 @@ async function HomeContent() {
   const culture = homeData?.culture ?? [];
   const { adSections, categorySlots } = alignHomeSections(homeSections);
   const categorySections = await resolveCategorySections(categorySlots, categories, latestBlogs);
-  const adCandidates = latestBlogs.filter((post) => post.cover_url);
-  const adOne = adSections[0]?.image_url ? null : adCandidates[0] || latestBlogs[0];
-  const adTwo = adSections[1]?.image_url ? null : adCandidates[1] || latestBlogs[1];
 
   const carouselSlides = heroSlides.map((s) => ({
     image: s.image_url,
@@ -98,13 +95,13 @@ async function HomeContent() {
           <StoryStrip title="Exclusives" href="/blogs?category=exclusive" posts={exclusives} badge="Exclusive" />
         </SectionWrapper>
       )}
-      {(adSections[0] || adOne) && (
+      {adSections[0] && (
         <SectionWrapper>
           <FeaturedBanner
-            title={adSections[0]?.title || adOne?.title || "Featured Partner"}
-            subtitle={adSections[0]?.subtitle || adOne?.excerpt || ""}
-            imageUrl={adSections[0]?.image_url || adOne?.cover_url || "/placeholder-hero.jpg"}
-            href={adSections[0]?.target_url || (adOne ? `/blogs/${adOne.slug}` : "#")}
+            title={adSections[0].title || "Featured Partner"}
+            subtitle={adSections[0].subtitle || ""}
+            imageUrl={adSections[0].image_url || "/placeholder-hero.jpg"}
+            href={adSections[0].target_url || "#"}
             label="Featured Partner"
           />
         </SectionWrapper>
@@ -117,13 +114,13 @@ async function HomeContent() {
           <CategoryStories section={categorySections[0]} />
         </SectionWrapper>
       )}
-      {(adSections[1] || adTwo) && (
+      {adSections[1] && (
         <SectionWrapper>
           <FeaturedBanner
-            title={adSections[1]?.title || adTwo?.title || "Spotlight"}
-            subtitle={adSections[1]?.subtitle || adTwo?.excerpt || ""}
-            imageUrl={adSections[1]?.image_url || adTwo?.cover_url || "/placeholder-hero.jpg"}
-            href={adSections[1]?.target_url || (adTwo ? `/blogs/${adTwo.slug}` : "#")}
+            title={adSections[1].title || "Spotlight"}
+            subtitle={adSections[1].subtitle || ""}
+            imageUrl={adSections[1].image_url || "/placeholder-hero.jpg"}
+            href={adSections[1].target_url || "#"}
             label="Spotlight"
             gradient
           />
