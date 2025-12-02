@@ -61,6 +61,22 @@ export function ShareBar({ title }: ShareBarProps) {
           Post to X
         </a>
         <a
+          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="rounded-full border border-white/10 bg-card/60 px-4 py-2 transition hover:border-accent/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+        >
+          Share on Facebook
+        </a>
+        <a
+          href={`https://api.whatsapp.com/send?text=${encodeURIComponent(title + " " + shareUrl)}`}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="rounded-full border border-white/10 bg-card/60 px-4 py-2 transition hover:border-accent/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+        >
+          Share on WhatsApp
+        </a>
+        <a
           href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(title)}`}
           target="_blank"
           rel="noreferrer noopener"

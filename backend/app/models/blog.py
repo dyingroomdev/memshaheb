@@ -15,7 +15,7 @@ class BlogPost(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
-    slug: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
+    slug: Mapped[str] = mapped_column(String(512), nullable=False, index=True)
     excerpt: Mapped[str | None] = mapped_column(Text())
     content_md: Mapped[str] = mapped_column(Text(), nullable=False)
     cover_url: Mapped[str | None] = mapped_column(String(1024))

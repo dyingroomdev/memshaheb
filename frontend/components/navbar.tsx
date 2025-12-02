@@ -47,6 +47,24 @@ export function Navbar({ siteSettings }: NavbarProps) {
     loadNavLinks();
   }, [siteSettings]);
 
+  useEffect(() => {
+    // Initialize theme from localStorage or system preference
+    const stored = typeof window !== "undefined" ? localStorage.getItem("theme_pref") : null;
+    if (stored === "light") {
+      setIsDarkMode(false);
+      document.documentElement.dataset.theme = "light";
+    } else {
+      setIsDarkMode(true);
+      document.documentElement.dataset.theme = "dark";
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.documentElement.dataset.theme = isDarkMode ? "dark" : "light";
+    localStorage.setItem("theme_pref", isDarkMode ? "dark" : "light");
+  }, [isDarkMode]);
+
   return (
     <motion.nav
       initial={{ y: -100 }}
