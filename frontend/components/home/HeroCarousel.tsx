@@ -57,7 +57,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className="relative h-full overflow-hidden rounded-b-[28px]">
+            <div className="relative h-full overflow-hidden rounded-b-[28px] bg-black">
               <Image
                 src={slide.image}
                 alt={slide.title}
@@ -66,61 +66,47 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                 className="object-cover"
                 sizes="100vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#0E0A14]/78 via-[#1A0F22]/45 to-transparent" />
-              <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute -left-20 -top-10 h-64 w-64 rounded-full bg-[radial-gradient(circle_at_center,rgba(203,59,145,0.28),transparent_60%)] blur-3xl opacity-90" />
-                <div className="absolute right-6 top-10 h-40 w-40 rounded-full bg-[radial-gradient(circle_at_center,rgba(126,102,255,0.22),transparent_60%)] blur-3xl opacity-80" />
-                <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[var(--bg)]/90 via-[var(--bg)]/10 to-transparent" />
-              </div>
+              {/* heavy vignette and left-to-right gradient for text legibility */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/10" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(255,255,255,0.12),transparent_45%)]" />
 
               <motion.div
                 variants={staggerContainer}
                 initial="hidden"
                 animate="visible"
-                className="absolute inset-0 flex items-center justify-center md:justify-start md:left-16 px-6"
+                className="absolute inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16"
               >
-                <div className="max-w-[92%] sm:max-w-[620px] xl:max-w-[720px] text-center md:text-left bg-white/5 backdrop-blur-lg border border-white/10 rounded-3xl px-6 sm:px-8 py-8 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
-                  <motion.div
+                <div className="max-w-3xl text-left space-y-5">
+                  <motion.span
                     variants={fadeUp}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-[0.32em] text-[var(--muted)] mb-4"
+                    className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-[11px] uppercase tracking-[0.28em] text-white/80"
                   >
-                    Memshaheb Magazine
-                  </motion.div>
-                  <motion.h1 
+                    Memshaheb
+                  </motion.span>
+                  <motion.h1
                     variants={fadeUp}
-                    className="font-display fluid-h1 font-bold text-[var(--ink)] tracking-tight drop-shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+                    className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
                   >
                     {slide.title}
                   </motion.h1>
-                  
                   {slide.subtitle && (
-                    <motion.p 
+                    <motion.p
                       variants={fadeUp}
-                      className="mt-4 max-w-xl text-lg md:text-xl text-[var(--muted)] leading-relaxed"
+                      className="text-lg sm:text-xl text-white/80 max-w-2xl"
                     >
                       {slide.subtitle}
                     </motion.p>
                   )}
-                  
-                  <motion.div 
-                    variants={fadeUp}
-                    className="mt-8 flex flex-col sm:flex-row gap-4"
-                  >
-                    {slide.cta && (
+                  {slide.cta && (
+                    <motion.div variants={fadeUp} className="pt-2">
                       <a
                         href={slide.cta.href}
-                        className="rounded-full px-8 py-3 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] text-[var(--bg)] font-semibold hover:opacity-90 transition-all duration-300 text-center shadow-[0_0_40px_rgba(213,155,246,0.35)]"
+                        className="inline-flex items-center rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] px-7 py-3 text-white font-semibold shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:opacity-90 transition-all duration-300"
                       >
                         {slide.cta.label}
                       </a>
-                    )}
-                    <a
-                      href="#about"
-                      className="rounded-full px-8 py-3 border border-[rgba(255,255,255,0.2)] text-[var(--ink)] hover:border-[var(--accent)]/60 hover:bg-white/5 transition-all duration-300 text-center backdrop-blur-sm"
-                    >
-                      About Memshaheb
-                    </a>
-                  </motion.div>
+                    </motion.div>
+                  )}
                 </div>
               </motion.div>
             </div>

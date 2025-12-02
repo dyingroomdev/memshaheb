@@ -3,9 +3,18 @@ from typing import Iterable
 
 
 def slugify(value: str) -> str:
-    value = value.strip().lower()
-    value = re.sub(r"[^a-z0-9\s-]", "", value)
-    value = re.sub(r"\s+", "-", value)
+    """
+    Generate a URL slug while allowing Unicode letters (e.g., Bangla).
+    Keeps alphanumerics, letters from any script, spaces, and hyphens.
+    """
+    value = value.strip()
+    # Normalize separators to spaces so we can collapse them later
+    value = value.replace("_", " ")
+    # Drop characters that are not word characters, whitespace, or hyphen
+    value = re.sub(r"[^\w\s-]", "", value, flags=re.UNICODE)
+    # Collapse whitespace to single hyphen
+    value = re.sub(r"\s+", "-", value, flags=re.UNICODE)
+    # Collapse multiple hyphens
     value = re.sub(r"-{2,}", "-", value)
     return value.strip("-")
 
