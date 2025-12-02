@@ -14,6 +14,7 @@ export function Navbar({ siteSettings }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [customLinks, setCustomLinks] = useState<NavLinkNode[]>([]);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [branding, setBranding] = useState<{ logo?: string | null; title?: string | null }>({});
   const pathname = usePathname();
 
@@ -89,7 +90,12 @@ export function Navbar({ siteSettings }: NavbarProps) {
             </Link>
             {customLinks.map((link) =>
               link.children && link.children.length > 0 ? (
-                <div key={link.label} className="relative group">
+                <div
+                  key={link.label}
+                  className="relative"
+                  onMouseEnter={() => setOpenDropdown(link.label)}
+                  onMouseLeave={() => setOpenDropdown((current) => (current === link.label ? null : current))}
+                >
                   <button
                     type="button"
                     className="inline-flex items-center gap-1 text-sm font-medium tracking-wide text-[var(--muted)] hover:text-[var(--ink)] transition-colors duration-200"
@@ -97,7 +103,11 @@ export function Navbar({ siteSettings }: NavbarProps) {
                     {link.label}
                     <ChevronDown className="h-3 w-3" />
                   </button>
-                  <div className="absolute left-0 mt-3 w-48 rounded-2xl border border-white/10 bg-card/90 backdrop-blur-xl shadow-glow-soft p-3 space-y-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+                  <div
+                    className={`absolute left-0 mt-3 w-48 rounded-2xl border border-white/10 bg-card/90 backdrop-blur-xl shadow-glow-soft p-3 space-y-1 z-50 transition ${
+                      openDropdown === link.label ? 'opacity-100 visible' : 'opacity-0 invisible'
+                    }`}
+                  >
                     {link.children
                       .filter((c) => c.enabled !== false)
                       .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
